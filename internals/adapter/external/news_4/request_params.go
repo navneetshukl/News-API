@@ -12,7 +12,7 @@ type Article struct {
 	Title       string   `json:"title" bson:"title"`
 	Description string   `json:"description" bson:"description"`
 	URL         string   `json:"url" bson:"url"`
-	URLToImage  *string  `json:"urlToImage,omitempty" bson:"urlToImage,omitempty"` // Use pointer to allow for null
+	URLToImage  string  `json:"urlToImage,omitempty" bson:"urlToImage,omitempty"` // Use pointer to allow for null
 	PublishedAt string   `json:"publishedAt" bson:"publishedAt"`
 	Content     string   `json:"content" bson:"content"`
 }

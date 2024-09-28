@@ -1,1 +1,0 @@
-package news_1

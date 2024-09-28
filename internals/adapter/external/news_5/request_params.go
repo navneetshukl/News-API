@@ -8,13 +8,13 @@ type NewsAPIResponse struct {
 
 type Article struct {
 	Source      Source  `json:"source" bson:"source"`
-	Author      *string `json:"author,omitempty" bson:"author,omitempty"` // Use pointer to allow for null
+	Author      string `json:"author,omitempty" bson:"author,omitempty"` // Use pointer to allow for null
 	Title       string  `json:"title" bson:"title"`
-	Description *string `json:"description,omitempty" bson:"description,omitempty"` // Use pointer to allow for null
+	Description string `json:"description,omitempty" bson:"description,omitempty"` // Use pointer to allow for null
 	URL         string  `json:"url" bson:"url"`
-	URLToImage  *string `json:"urlToImage,omitempty" bson:"urlToImage,omitempty"` // Use pointer to allow for null
+	URLToImage  string `json:"urlToImage,omitempty" bson:"urlToImage,omitempty"` // Use pointer to allow for null
 	PublishedAt string  `json:"publishedAt" bson:"publishedAt"`
-	Content     *string `json:"content,omitempty" bson:"content,omitempty"` // Use pointer to allow for null
+	Content     string `json:"content,omitempty" bson:"content,omitempty"` // Use pointer to allow for null
 }
 
 type Source struct {
