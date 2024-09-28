@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -50,6 +51,7 @@ func (ws *WebSocket) HandleConnection(w http.ResponseWriter, r *http.Request) {
 
 	for {
 		go ws.handleMessages()
+		time.Sleep(1*time.Minute)
 
 	}
 }
@@ -57,7 +59,14 @@ func (ws *WebSocket) HandleConnection(w http.ResponseWriter, r *http.Request) {
 func (ws *WebSocket) handleMessages() {
 	for {
 
-		msg := []byte("Hi")
+		n1, _ := ws.NewsUseCase.GetFirstNews()
+		bytes, err := json.Marshal(n1)
+		if err != nil {
+			log.Println("error in converting to byte ", err)
+			continue
+		}
+
+		msg := bytes
 		ws.broadcast(1, msg)
 		time.Sleep(1 * time.Minute) // Add sleep to avoid flooding
 	}
@@ -72,6 +81,7 @@ func (ws *WebSocket) broadcast(messageType int, msg []byte) {
 		err := conn.WriteMessage(messageType, msg)
 		if err != nil {
 			log.Println("Error writing message:", err)
+			return
 		}
 	}
 }

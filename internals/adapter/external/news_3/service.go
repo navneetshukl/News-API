@@ -15,6 +15,8 @@ func NewsSvc() (*NewsAPIResponse, error) {
 	BaseURL := "https://newsapi.org/v2/top-headlines?country=us"
 	URL := fmt.Sprintf("%s&apiKey=%s", BaseURL, apiKey)
 
+	log.Println("URL is ",URL)
+
 	req, err := http.NewRequest("GET", URL, nil) // Changed to GET as the NYT API usually uses GET for this endpoint
 	if err != nil {
 		log.Println("error in creating the request:", err)
