@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"news-api/internals/core/news"
 	"sync"
@@ -44,24 +43,6 @@ func (ws *WebSocket) HandleConnection(w http.ResponseWriter, r *http.Request) {
 
 	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
-	//	cnt := 0
-
-	// Send a message to the client at regular intervals
-	// go func() {
-	// 	for {
-	// 		select {
-	// 		case <-ticker.C:
-	// 			str := fmt.Sprintf("%s,%d", "Hello from the server!", cnt)
-	// 			message := map[string]string{"message": str}
-	// 			msg, _ := json.Marshal(message)
-	// 			err := conn.WriteMessage(websocket.TextMessage, msg)
-	// 			if err != nil {
-	// 				return // Stop if there is an error
-	// 			}
-	// 			cnt++
-	// 		}
-	// 	}
-	// }()
 
 	go ws.BroadCast(conn)
 
@@ -81,7 +62,7 @@ func (ws *WebSocket) HandleConnection(w http.ResponseWriter, r *http.Request) {
 }
 
 func (ws *WebSocket) BroadCast(conn *websocket.Conn) {
-	ticker := time.NewTicker(2 * time.Second)
+	ticker := time.NewTicker(10 * time.Second)
 	defer ticker.Stop()
 	cnt := 0
 
@@ -89,9 +70,12 @@ func (ws *WebSocket) BroadCast(conn *websocket.Conn) {
 	for {
 		select {
 		case <-ticker.C:
-			str := fmt.Sprintf("%s,%d", "Hello from the server!", cnt)
-			message := map[string]string{"message": str}
-			msg, _ := json.Marshal(message)
+			// str := fmt.Sprintf("%s,%d", "Hello from the server!", cnt)
+			// message := map[string]string{"message": str}
+			// msg, _ := json.Marshal(message)
+
+			n1, _ := ws.NewsUseCase.GetFirstNews()
+			msg, _ := json.Marshal(n1)
 			err := conn.WriteMessage(websocket.TextMessage, msg)
 			if err != nil {
 				return // Stop if there is an error
