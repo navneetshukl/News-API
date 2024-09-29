@@ -27,3 +27,8 @@ type NewsUseCase interface {
 	GetSecondNews() (*NewsAPIResponse, error)
 	GetThirdNews() (*NewsAPIResponse, error)
 }
+
+type AllNews struct {
+	Articles        []Article `json:"articles" bson:"articles"`
+	Connected_Users int       `json:"total_connected_users" bson:"total_connected_users"`
+}
